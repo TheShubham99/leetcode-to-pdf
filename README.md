@@ -5,6 +5,11 @@ LeetCode Submission Saver is a tool that allows users to save all their accepted
 
 ## How to Use
 
+Click to open following youtube video
+[![IMAGE ALT TEXT HERE](https://github.com/TheShubham99/leetcode-to-pdf/assets/20538904/3d16c982-270a-4341-bf64-1896a0520047)](https://www.youtube.com/watch?v=hbQM4ioN3b4)
+
+(https://www.youtube.com/watch?v=hbQM4ioN3b4)    // Video Link
+
 1. **Copy the Script**: Copy the code from [leetcode-pdf.js](https://github.com/TheShubham99/leetcode-to-pdf/blob/main/leetcode-pdf.js) This script contains the necessary functionality to extract and save accepted submissions from LeetCode.
 
 2. **Log in to LeetCode**: Visit the LeetCode website (https://leetcode.com) and log in to your account.
