@@ -18,7 +18,7 @@ Click to open following youtube video
 
 4. **Go to Console**: In the Developer Tools panel, navigate to the "Console" tab.
 
-5. **Paste the Code**: Paste the code copied from `xyz.js` into the console and press `Enter` to execute it.
+5. **Paste the Code**: Paste the code copied from `leetcode-pdf.js` into the console and press `Enter` to execute it.
 
 6. **Follow Instructions**: Follow the on-screen instructions to complete the process, which may include authenticating with LeetCode and initiating the PDF generation.
 

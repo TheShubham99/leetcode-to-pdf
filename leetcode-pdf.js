@@ -24,6 +24,48 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+function fetchUsername() {
+  return new Promise((resolve, reject) => {
+    const query = `
+      query globalData {
+        userStatus {
+          username
+        }
+      }
+    `;
+
+    const body = JSON.stringify({
+      query: query,
+      variables: {},
+      operationName: "globalData",
+    });
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "https://leetcode.com/graphql/");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onload = function () {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        const data = JSON.parse(xhr.responseText);
+        if (data && data.data && data.data.userStatus) {
+          const username = data.data.userStatus.username;
+          resolve(username);
+        } else {
+          console.error("Failed to fetch username");
+          reject("Failed to fetch username");
+        }
+      } else {
+        console.error("Failed to fetch username");
+        reject("Failed to fetch username");
+      }
+    };
+    xhr.onerror = function () {
+      console.error("Request failed");
+      reject("Request failed");
+    };
+    xhr.send(body);
+  });
+}
+
 function fetchQuestionContent(titleSlug) {
   return new Promise((resolve, reject) => {
     const query = `
@@ -80,7 +122,6 @@ function highlightCode(language, code) {
             /\b(if|else|elif|while|for|in|def|class|pass|return)\b/g,
             "<span class='keyword'>$1</span>"
           );
-          // highlightedLine = line.replace(/\b(\u003C)\b/g, "<span class='keyword'> $1 </span>")
           highlightedCode += `${highlightedLine}\n`;
         }
       }
@@ -99,7 +140,6 @@ function highlightCode(language, code) {
             /\b(if|else|while|for|return|break|continue|class|int|double|string|void|float|long|bool|vector|string|char|map|set)\b/g,
             "<span class='keyword'>$1</span>"
           );
-          // highlightedLine = line.replace(/\b(\u003C)\b/g, "<span class='keyword'> $1 </span>")
           highlightedCode += `${highlightedLine}\n`;
         }
       }
@@ -113,7 +153,7 @@ function highlightCode(language, code) {
   return highlightedCode;
 }
 
-function generateHTMLContent(questionMap) {
+function generateHTMLContent(questionMap, username = "") {
   let htmlContent = `
         <!DOCTYPE html>
         <html lang="en">
@@ -197,7 +237,6 @@ function generateHTMLContent(questionMap) {
                 .keyword{
                     color: #0e77ae;
                 }
-
                 .comment{
                     color: green;    
                 }
@@ -205,7 +244,9 @@ function generateHTMLContent(questionMap) {
         </head>
         <body>
             <div class="header">
-                <h1>LeetCode Submissions</h1>
+                <h1>My LeetCode Submissions ${
+                  username ? `- @${username}` : ""
+                }</h1>
                 <div class="header-buttons">
                     <a class="button" onclick="print()" >Download PDF </a>
                     <a href="https://github.com/theshubham99" class="button" target="_blank">Follow @TheShubham99 on GitHub</a>
@@ -375,9 +416,16 @@ LeetCodeSubmissionDownloader.processAPIResults = async function (
     console.log(
       "Total submissions processed:  " + LeetCodeSubmissionDownloader.processed
     );
-
-    const htmlContent = generateHTMLContent(questionMap);
-    printHTML(htmlContent);
+    fetchUsername()
+      .then((username) => {
+        const htmlContent = generateHTMLContent(questionMap, username);
+        printHTML(htmlContent);
+      })
+      .catch((error) => {
+        console.error("Failed to get username Error:", error);
+        const htmlContent = generateHTMLContent(questionMap, "");
+        printHTML(htmlContent);
+      });
   } else {
     console.log(
       "Submissions saved so far:  " + LeetCodeSubmissionDownloader.processed
