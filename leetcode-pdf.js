@@ -161,6 +161,7 @@ function generateHTMLContent(questionMap, username = "") {
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>LeetCode Submissions</title>
+            <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/TheShubham99/leetcode-to-pdf/main/logo.png">
             <style>
                 body {
                     font-family: Arial, sans-serif;
@@ -302,6 +303,13 @@ function generateHTMLContent(questionMap, username = "") {
 
 // Function to open print dialog for specific HTML content
 function printHTML(htmlContent) {
+
+  const button = document.getElementById("download-submissions");
+  if (button) {
+    button.classList.remove("disable");
+    button.disabled = false;
+    button.innerHTML = `Download PDF <span style="font-size: 16px; margin-left: 2px;">&#10507;</span>`;
+  }
   // Open the HTML content in a new window
   const newWindow = window.open();
   newWindow.document.write(htmlContent);
