@@ -13,15 +13,20 @@ LeetCodeSubmissionDownloader.BASE_PROBLEM_ADDRESS =
 LeetCodeSubmissionDownloader.INCREASE_LAST_BY = 20;
 LeetCodeSubmissionDownloader.WAIT_BETWEEN_REQUESTS = 2500; // milliseconds
 LeetCodeSubmissionDownloader.INCREASE_WAIT_BY_ON_ERROR = 2;
-LeetCodeSubmissionDownloader.SAVE_AS = "submissions.zip";
 
+LeetCodeSubmissionDownloader.questionMap = {};
 LeetCodeSubmissionDownloader.last = 0;
 LeetCodeSubmissionDownloader.processed = 0;
 LeetCodeSubmissionDownloader.waitUsedBetweenRequests =
   LeetCodeSubmissionDownloader.WAIT_BETWEEN_REQUESTS;
+LeetCodeSubmissionDownloader.MAX_ATTEMPT = 5;
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+// Function to send a message to the popup script
+function sendMessageToPopup(message) {
+  chrome.runtime.sendMessage({ type: "setUpdates", ...message });
 }
 
 function fetchUsername() {
@@ -68,41 +73,43 @@ function fetchUsername() {
 
 function fetchQuestionContent(titleSlug) {
   return new Promise((resolve, reject) => {
-    const query = `
-            query questionContent($titleSlug: String!) {
-                question(titleSlug: $titleSlug) {
-                    content
-                }
-            }
-        `;
+    setTimeout(() => {
+      const query = `
+        query questionContent($titleSlug: String!) {
+          question(titleSlug: $titleSlug) {
+            content
+          }
+        }
+      `;
 
-    const variables = {
-      titleSlug: titleSlug,
-    };
+      const variables = {
+        titleSlug: titleSlug,
+      };
 
-    const body = JSON.stringify({
-      query: query,
-      variables: variables,
-      operationName: "questionContent",
-    });
+      const body = JSON.stringify({
+        query: query,
+        variables: variables,
+        operationName: "questionContent",
+      });
 
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://leetcode.com/graphql/");
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onload = function () {
-      if (xhr.status >= 200 && xhr.status < 300) {
-        const data = JSON.parse(xhr.responseText);
-        resolve(data.data.question.content);
-      } else {
-        console.error("Failed to fetch question content");
-        reject("Failed to fetch question content");
-      }
-    };
-    xhr.onerror = function () {
-      console.error("Request failed");
-      reject("Request failed");
-    };
-    xhr.send(body);
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "https://leetcode.com/graphql/");
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          const data = JSON.parse(xhr.responseText);
+          resolve(data.data.question.content);
+        } else {
+          console.error("Failed to fetch question content");
+          reject("Failed to fetch question content");
+        }
+      };
+      xhr.onerror = function () {
+        console.error("Request failed");
+        reject("Request failed");
+      };
+      xhr.send(body);
+    }, 50); // 50 milliseconds delay to avoid rate limitting
   });
 }
 
@@ -132,7 +139,8 @@ function highlightCode(language, code) {
         const isComment =
           line.trim().startsWith("//") ||
           line.trim().startsWith("/*") ||
-          line.trim().startsWith("*");
+          line.trim().endsWith("*/");
+
         if (isComment) {
           highlightedCode += `<span class='comment'>${line}</span>\n`;
         } else {
@@ -153,7 +161,7 @@ function highlightCode(language, code) {
   return highlightedCode;
 }
 
-function generateHTMLContent(questionMap, username = "") {
+function generateHTMLContent(username = "") {
   let htmlContent = `
         <!DOCTYPE html>
         <html lang="en">
@@ -261,7 +269,7 @@ function generateHTMLContent(questionMap, username = "") {
   for (const [
     title,
     { heading, language, description, solution },
-  ] of Object.entries(questionMap)) {
+  ] of Object.entries(LeetCodeSubmissionDownloader.questionMap)) {
     let highlightedSolution = highlightCode(
       language,
       solution
@@ -303,13 +311,10 @@ function generateHTMLContent(questionMap, username = "") {
 
 // Function to open print dialog for specific HTML content
 function printHTML(htmlContent) {
-
-  const button = document.getElementById("download-submissions");
-  if (button) {
-    button.classList.remove("disable");
-    button.disabled = false;
-    button.innerHTML = `Download PDF <span style="font-size: 16px; margin-left: 2px;">&#10507;</span>`;
-  }
+  sendMessageToPopup({
+    button: `Download PDF <span style="font-size: 16px; margin-left: 2px;">&#10507;</span>`,
+    processing: false,
+  });
   // Open the HTML content in a new window
   const newWindow = window.open();
   newWindow.document.write(htmlContent);
@@ -318,6 +323,14 @@ function printHTML(htmlContent) {
 }
 
 LeetCodeSubmissionDownloader.pullFromLeetCodeAPI = function () {
+  if (LeetCodeSubmissionDownloader.MAX_ATTEMPT <= 0) {
+    sendMessageToPopup({
+      process_status: "Error: Something Went Wrong",
+      button: "Please wait...",
+      processing: false,
+    });
+    return;
+  }
   try {
     let address = new URL(
       LeetCodeSubmissionDownloader.LEETCODE_SUBMISSIONS_API +
@@ -352,6 +365,10 @@ LeetCodeSubmissionDownloader.handleError = async function () {
   LeetCodeSubmissionDownloader.waitUsedBetweenRequests *=
     LeetCodeSubmissionDownloader.INCREASE_WAIT_BY_ON_ERROR;
 
+  sendMessageToPopup({
+    process_status: "Error: Failed to pull API data",
+    processing: true,
+  });
   console.log(
     "Error: Failed to pull API data from " +
       LeetCodeSubmissionDownloader.LEETCODE_SUBMISSIONS_API +
@@ -360,15 +377,14 @@ LeetCodeSubmissionDownloader.handleError = async function () {
       " milliseconds."
   );
 
+  LeetCodeSubmissionDownloader.MAX_ATTEMPT -= 1;
   await sleep(LeetCodeSubmissionDownloader.waitUsedBetweenRequests);
 
   LeetCodeSubmissionDownloader.pullFromLeetCodeAPI();
 };
 
-let questionMap = {};
-
 // example question in questionMap
-// const res = {
+// const question = {
 //     title: title,
 //     heading:titleHeading,
 //     language: submissionsFound[i].lang,
@@ -393,9 +409,12 @@ LeetCodeSubmissionDownloader.processAPIResults = async function (
       submissionsFound[i].question_id + " " + submissionsFound[i].title;
 
     if (
-      title in questionMap ||
+      title in LeetCodeSubmissionDownloader.questionMap ||
       submissionsFound[i]?.status_display?.toLowerCase() !== "accepted"
     ) {
+      // if question is already in map
+      // or
+      // status is not accepted then continue
       continue;
     }
 
@@ -404,7 +423,7 @@ LeetCodeSubmissionDownloader.processAPIResults = async function (
     await fetchQuestionContent(title)
       .then((questionContent) => {
         // Log question content
-        const res = {
+        const question = {
           title: title,
           heading: titleHeading,
           language: submissionsFound[i].lang,
@@ -413,7 +432,7 @@ LeetCodeSubmissionDownloader.processAPIResults = async function (
           question_id: submissionsFound[i].question_id,
         };
 
-        questionMap[title] = res;
+        LeetCodeSubmissionDownloader.questionMap[title] = question;
       })
       .catch((error) => {
         console.error("Failed to fetch question content:", error);
@@ -421,22 +440,43 @@ LeetCodeSubmissionDownloader.processAPIResults = async function (
   }
 
   if (!data.has_next) {
+    sendMessageToPopup({
+      process_status:
+        `<span style="color:green;"> Total submissions processed:  ` +
+        LeetCodeSubmissionDownloader.processed +
+        "</span>",
+      processing: false,
+    });
     console.log(
-      "Total submissions processed:  " + LeetCodeSubmissionDownloader.processed
+      "Total Questions processed:  " + LeetCodeSubmissionDownloader.processed
     );
     fetchUsername()
       .then((username) => {
-        const htmlContent = generateHTMLContent(questionMap, username);
+        const htmlContent = generateHTMLContent(username);
         printHTML(htmlContent);
       })
       .catch((error) => {
         console.error("Failed to get username Error:", error);
-        const htmlContent = generateHTMLContent(questionMap, "");
+        const htmlContent = generateHTMLContent("");
         printHTML(htmlContent);
       });
   } else {
+    // Send messages to the popup script
+    sendMessageToPopup({ button: "Loading...", processing: true });
+    sendMessageToPopup({
+      process_status:
+        `
+    <div class="ui active progress indeterminate" style="margin:7px 0 10px;">
+      <div class="bar" style="width:60%; height:10px; border-radius:8px; background-color:purple;"></div>
+    </div>
+    Please wait..
+    <div> Questions saved so far: <span style="color:green">` +
+        LeetCodeSubmissionDownloader.processed +
+        `</span></div>`,
+      processing: true,
+    });
     console.log(
-      "Submissions saved so far:  " + LeetCodeSubmissionDownloader.processed
+      "Questions saved so far:  " + LeetCodeSubmissionDownloader.processed
     );
     console.log("Batch Complete! Hold on, next batch in progress.");
 

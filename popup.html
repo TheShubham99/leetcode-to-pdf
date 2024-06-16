@@ -24,12 +24,10 @@
             <div><span><b>1.</b> Make sure you are logged in on LeetCode.com</span></div>
             <div><span id="caption"><b>2.</b> Click on the following button to view and download your accepted
                     submissions.</span></div>
-            <div><span id="caption"><b>3.</b> Download all accepted submissions</span></div>
             <br />
-            <div><span id="caption"><b>Downloading may take upto 5-10 minutes, depending upon your number of
-                        submissions.</b></span></div>
-            <div><span id="caption"><b>Check console to see updates and errors.</b></span></div>
-            <br>
+            <div><span id="caption"><b>Do not close the tab.</b></span></div>
+            <div><span id="caption"><b>Downloading may take upto 10 minutes.</b></span></div>
+            <div id="process-status" style="padding:10px; color:black; font-weight:bold;"></div>
             <div id="caption"
                 style="line-height: 16px; display: flex; gap: 8px; align-items: center; justify-content: center;">
                 <a class="github-button" href="https://github.com/TheShubham99/leetcode-to-pdf" data-icon="octicon-star"
@@ -38,8 +36,8 @@
                 on GitHub
             </div>
             <br>
-            <button id="download-submissions" class="ui secondary button">
-                Download PDF <span style="font-size: 16px; margin-left: 2px;">&#10507;</span>
+            <button id="download-submissions" class="ui secondary button disable" disabled>
+                Please wait...
             </button>
         </div>
         <br />
