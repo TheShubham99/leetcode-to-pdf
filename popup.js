@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       originalContent = button.innerHTML;
       button.innerHTML = "Loading...";
 
-      if (tab.url.includes("leetcode.com")) {
+      if (tab?.url?.includes?.("leetcode.com")) {
         chrome.scripting.executeScript({
           target: { tabId: tab.id },
           files: ["leetcode-pdf.js"],
