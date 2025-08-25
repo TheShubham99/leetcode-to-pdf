@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LeetBook – Save LeetCode Submissions to PDF</title>
+    <meta name="description"
+        content="LeetBook Chrome Extension helps you save all your accepted LeetCode submissions as a clean, searchable PDF. Perfect for revision, interviews, and learning. Install now for free.">
+    <meta name="keywords"
+        content="LeetCode, PDF saver, coding interview prep, chrome extension, save submissions, LeetBook">
+    <meta name="author" content="Prathamesh Sahasrabhojane" />
+    <link rel="icon" href="https://www.google.com/s2/favicons?domain=leetcode.com" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="LeetBook – Save LeetCode Submissions to PDF" />
+    <meta property="og:description"
+        content="Save all your accepted LeetCode submissions as a PDF. Free Chrome extension for coding interview prep." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://theshubham99.github.io/leetcode-to-pdf/" />
+    <meta property="og:image" content="https://theshubham99.github.io/leetcode-to-pdf/preview.png" />
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-L0LPFRX287"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-L0LPFRX287');
+    </script>
+
+    <!-- Animations -->
+    <style>
+        .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.8s forwards;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .delay-1 {
+            animation-delay: 0.3s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.6s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.9s;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-gradient-to-br from-purple-900 via-purple-800 to-purple-700 text-white font-sans relative overflow-hidden">
+
+    <!-- Decorative BG Pattern -->
+    <svg class="absolute top-0 left-0 w-full h-full opacity-10" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="0.5" />
+            </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#grid)" />
+    </svg>
+
+    <!-- Hero -->
+    <section class="min-h-screen flex flex-col items-center justify-center text-center px-6 relative z-10">
+        <h1 class="text-5xl font-extrabold mb-4 fade-up">
+            Save Your <span class="text-yellow-300">LeetCode</span> Submissions as PDF
+        </h1>
+        <p class="max-w-2xl text-lg mb-8 opacity-90 fade-up delay-1">
+            LeetBook helps you download all your <strong>accepted LeetCode submissions</strong> into a clean, organized,
+            and searchable PDF.
+            Perfect for <span class="font-semibold">interview prep</span>, <span class="font-semibold">revision</span>,
+            and <span class="font-semibold">personal records</span>.
+        </p>
+        <a href="https://chromewebstore.google.com/detail/leetcode-pdf-saver/emdfjmejkmhehmpaggklnmhgloijgnam"
+            target="_blank"
+            class="fade-up delay-2 bg-yellow-400 hover:bg-yellow-500 text-purple-900 font-bold px-8 py-4 rounded-2xl shadow-lg transition transform hover:scale-105">
+            🚀 Install Free on Chrome
+        </a>
+        <p class="mt-4 text-sm opacity-70 fade-up delay-3">No sign-up required. Works directly with your LeetCode
+            account.</p>
+    </section>
+
+    <!-- Features -->
+    <section class="py-16 px-6 bg-white text-gray-900 relative z-10">
+        <h2 class="text-3xl font-bold text-center mb-12 fade-up">Why Developers ❤️ LeetBook</h2>
+        <div class="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+            <div class="p-6 rounded-2xl shadow-lg border fade-up delay-1">
+                <img src="https://cdn-icons-png.flaticon.com/512/337/337946.png" alt="PDF"
+                    class="w-12 h-12 mb-4 mx-auto" />
+                <h3 class="text-xl font-semibold mb-2">Organized PDFs</h3>
+                <p>All your accepted submissions neatly compiled with problem statements & solutions.</p>
+            </div>
+            <div class="p-6 rounded-2xl shadow-lg border fade-up delay-2">
+                <img src="https://cdn-icons-png.flaticon.com/512/1040/1040230.png" alt="Fast"
+                    class="w-12 h-12 mb-4 mx-auto" />
+                <h3 class="text-xl font-semibold mb-2">Fast & Automatic</h3>
+                <p>With one click, download everything. No copy-paste, no manual work.</p>
+            </div>
+            <div class="p-6 rounded-2xl shadow-lg border fade-up delay-3">
+                <img src="https://cdn-icons-png.flaticon.com/512/1165/1165674.png" alt="Laptop"
+                    class="w-12 h-12 mb-4 mx-auto" />
+                <h3 class="text-xl font-semibold mb-2">Perfect for Prep</h3>
+                <p>Review your past solutions offline before interviews or exams anytime.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof -->
+    <section class="py-16 px-6 relative z-10">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-6 fade-up">Trusted by 1,000+ Developers</h2>
+            <p class="mb-8 opacity-90 fade-up delay-1">Join a growing community of coders who rely on LeetBook to keep
+                track of their progress and ace coding interviews.</p>
+            <a href="https://github.com/TheShubham99/leetcode-to-pdf" target="_blank"
+                class="fade-up delay-2 inline-flex items-center gap-2 bg-gray-900 hover:bg-gray-800 px-6 py-3 rounded-xl text-white font-semibold shadow-md transition">
+                ⭐ Star us on GitHub
+            </a>
+        </div>
+    </section>
+
+    <!-- CTA Footer -->
+    <footer class="bg-purple-950 py-12 text-center relative z-10">
+        <h3 class="text-2xl font-bold mb-4 fade-up">Ready to save your submissions?</h3>
+        <a href="https://chromewebstore.google.com/detail/leetcode-pdf-saver/emdfjmejkmhehmpaggklnmhgloijgnam"
+            target="_blank"
+            class="bg-yellow-400 hover:bg-yellow-500 text-purple-900 font-bold px-8 py-4 rounded-2xl shadow-lg transition transform hover:scale-105 fade-up delay-1">
+            Install LeetBook Now
+        </a>
+        <p class="mt-6 text-sm opacity-60 fade-up delay-2">Built by <a
+                href="https://www.linkedin.com/in/prathamesh-sahasrabhojane/" class="underline">Prathamesh</a> • <a
+                href="mailto:ssahasrabhojane@gmail.com" class="underline">Contact</a></p>
+    </footer>
+
+</body>
+
+</html>
