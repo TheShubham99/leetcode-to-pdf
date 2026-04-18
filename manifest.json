@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "LeetCode PDF Saver",
     "author": "Prathamesh Sahasrabhojane",
-    "version": "1.2",
+    "version": "1.3",
     "description": "Save all accepted submissions from LeetCode to a PDF.",
     "permissions": ["scripting"],
     "host_permissions": [

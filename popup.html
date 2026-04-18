@@ -32,14 +32,9 @@
             <div><span id="caption"><b>Do not close the tab.</b></span></div>
             <div><span id="caption"><b>Downloading may take upto 10 minutes.</b></span></div>
             <div id="process-status" style="padding:10px; color:black; font-weight:bold;"></div>
-            <div id="caption"
-                style="line-height: 16px; display: flex; gap: 8px; align-items: center; justify-content: center;">
-                <a class="github-button" href="https://github.com/TheShubham99/leetcode-to-pdf" data-icon="octicon-star"
-                    data-size="large" data-show-count="true"
-                    aria-label="Star TheShubham99/leetcode-to-pdf on GitHub">Star</a>
-                on GitHub
+            <div id="stuck-warning" style="display:none; padding:10px; color:red; font-size: 12px; margin-top: -10px;">
+                Is the process stuck? <a href="#" id="restart-btn" style="text-decoration: underline;">Click here to restart</a>
             </div>
-            <br>
             <button id="download-submissions" class="ui secondary button disable" disabled>
                 Please wait...
             </button>
@@ -56,6 +51,9 @@
         <a href="https://forms.gle/ANTV81d47kyVLtcv7" target="_blank"><i class="ui red bug icon"></i> Report a Bug /
             Suggestion</a>
     </div>
+<!-- Rating Modal Overlay -->
+
+
     <script type="text/javascript" src="popup.js"></script>
 </body>
 

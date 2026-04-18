@@ -263,6 +263,16 @@ function generateHTMLContent(username = "") {
                     <a href="https://github.com/theshubham99/leetcode-to-pdf" class="button" target="_blank">View Source Code</a>
                 </div>
             </div>
+
+            <div class="question" style="text-align: center; background-color: #f8f9fa; border: 2px dashed #ccc; padding: 30px; margin-top: 20px; page-break-inside: avoid;">
+                <div style="font-size:4em; margin-bottom: 15px;">🥺</div>
+                <h2 style="margin-top: 0; color: #111;">Your PDF is Ready! ❤️ </h2>
+                <p style="font-size: 16px; color: #333; margin-bottom: 20px;">If LeetBook saved you some time, it would mean the absolute world to us if you could drop a quick 5-star rating! 🙏🏻</p>
+                <a href="https://chromewebstore.google.com/detail/emdfjmejkmhehmpaggklnmhgloijgnam/reviews" target="_blank" style="display: inline-block; background-color: #fbbc04; color: #111; font-weight: bold; font-size: 18px; padding: 12px 24px; text-decoration: none; border-radius: 6px;">⭐ Rate 5 Stars on Chrome</a>
+                <div style="margin-top: 20px;">
+                    <a href="https://github.com/TheShubham99/leetcode-to-pdf" target="_blank" style="color: #888; font-size: 14px; text-decoration: underline;">Or drop a star on GitHub 🌟</a>
+                </div>
+            </div>
     `;
 
   // Iterate over each question in the questionMap and add it to the HTML content
