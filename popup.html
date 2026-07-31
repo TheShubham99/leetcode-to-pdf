@@ -1,273 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>LeetBook</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+    <script src="vendors/jquery-3.3.1.min.js"></script>
+    <script async defer src="vendors/buttons.js"></script>
+
+    <!-- Google Analytics -->
+    <script src="vendors/gtag.js"></script>
+    <script src="ga-init.js"></script>
+
+</head>
+
+<style>
+    .disable {
+        background-color: #A0A0A0;
+    }
+</style>
+
 <body>
 
-<div class="ui grid container"
-    style="border:1px solid black;border-radius:4px;padding:10px;margin:4px;min-width:420px;">
+    <div class="ui grid container"
+        style="border: 1px solid black; border-radius: 4px; padding: 10px; margin: 4px;">
 
-    <!-- Existing Title -->
-    <div class="sixteen wide center aligned column">
-        <h1 id="title">
-            Leet<span style="color:purple;">Book</span>
-        </h1>
-    </div>
+        <div class="sixteen wide center aligned column">
 
-    <!-- ========================= -->
-    <!-- NEW PROFILE CARD -->
-    <!-- ========================= -->
+            <h1 id="title">
+                Leet<span style="color: purple;">Book</span>
+            </h1>
 
-    <div class="sixteen wide column">
+            <div>
+                <span><b>1.</b> Make sure you are logged in on LeetCode.com</span>
+            </div>
 
-        <div class="ui segment">
+            <div>
+                <span id="caption">
+                    <b>2.</b> Click on the following button to view and download your accepted submissions.
+                </span>
+            </div>
 
-            <div class="ui grid">
+            <br>
 
-                <div class="four wide column center aligned">
+            <div>
+                <span id="caption">
+                    <b>Do not close the tab.</b>
+                </span>
+            </div>
 
-                    <img id="profile-pic"
-                        src="logo.png"
-                        style="width:80px;height:80px;border-radius:50%;">
+            <div>
+                <span id="caption">
+                    <b>Downloading may take upto 10 minutes.</b>
+                </span>
+            </div>
 
-                </div>
+            <div id="process-status"
+                style="padding:10px; color:black; font-weight:bold;">
+            </div>
 
-                <div class="twelve wide column">
+            <div id="stuck-warning"
+                style="display:none; padding:10px; color:red; font-size:12px; margin-top:-10px;">
 
-                    <h3 id="username">Loading...</h3>
+                Is the process stuck?
 
-                    <p>
-                        <b>Rank :</b>
-                        <span id="rank">--</span>
-                    </p>
+                <a href="#" id="restart-btn"
+                    style="text-decoration: underline;">
 
-                    <p>
-                        <b>Contest Rating :</b>
-                        <span id="contest-rating">--</span>
-                    </p>
+                    Click here to restart
 
-                    <p>
-                        <b>Acceptance :</b>
-                        <span id="acceptance">--</span>
-                    </p>
-
-                </div>
+                </a>
 
             </div>
 
-        </div>
+            <button id="download-submissions"
+                class="ui secondary button disable"
+                disabled>
 
-    </div>
+                Please wait...
 
-    <!-- ========================= -->
-    <!-- NEW STATS -->
-    <!-- ========================= -->
+            </button>
 
-    <div class="sixteen wide column">
-
-        <div class="ui four statistics tiny">
-
-            <div class="statistic">
-
-                <div class="value" id="easy">
-                    0
-                </div>
-
-                <div class="label">
-                    Easy
-                </div>
-
-            </div>
-
-            <div class="statistic">
-
-                <div class="value" id="medium">
-                    0
-                </div>
-
-                <div class="label">
-                    Medium
-                </div>
-
-            </div>
-
-            <div class="statistic">
-
-                <div class="value" id="hard">
-                    0
-                </div>
-
-                <div class="label">
-                    Hard
-                </div>
-
-            </div>
-
-            <div class="statistic">
-
-                <div class="value" id="total">
-                    0
-                </div>
-
-                <div class="label">
-                    Total
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- ========================= -->
-    <!-- NEW CONTEST CARD -->
-    <!-- ========================= -->
-
-    <div class="sixteen wide column">
-
-        <div class="ui segment">
-
-            <h4>Contest</h4>
-
-            <p>
-                Attended :
-                <span id="contest-attended">--</span>
-            </p>
-
-            <p>
-                Global Rank :
-                <span id="global-rank">--</span>
-            </p>
-
-            <p>
-                Current Rating :
-                <span id="current-rating">--</span>
-            </p>
-
-        </div>
-
-    </div>
-
-    <!-- ========================= -->
-    <!-- NEW STREAK CARD -->
-    <!-- ========================= -->
-
-    <div class="sixteen wide column">
-
-        <div class="ui segment">
-
-            <h4>Activity</h4>
-
-            <p>
-                Current Streak :
-                <span id="current-streak">--</span>
-            </p>
-
-            <p>
-                Max Streak :
-                <span id="max-streak">--</span>
-            </p>
-
-            <p>
-                Active Days :
-                <span id="active-days">--</span>
-            </p>
-
-        </div>
-
-    </div>
-
-    <!-- ========================= -->
-    <!-- KEEP EXISTING INSTRUCTIONS -->
-    <!-- ========================= -->
-
-    <div class="sixteen wide center aligned column">
-
-        <div>
-            <span><b>1.</b> Make sure you are logged in on LeetCode.com</span>
-        </div>
-
-        <div>
-            <span id="caption">
-                <b>2.</b>
-                Click below to download your accepted submissions.
-            </span>
         </div>
 
         <br>
 
-        <div>
-            <span><b>Do not close the tab.</b></span>
-        </div>
+        <div id="socials"
+            class="sixteen wide column center aligned">
 
-        <div>
-            <span>Downloading may take up to 10 minutes.</span>
-        </div>
+            <a href="https://github.com/TheShubham99/leetcode-to-pdf"
+                target="_blank">
 
-        <div id="process-status"
-            style="padding:10px;font-weight:bold;">
-        </div>
+                <i class="ui black github icon"></i>
 
-        <div id="stuck-warning"
-            style="display:none;padding:10px;color:red;">
+            </a>
 
-            Is the process stuck?
+            <a href="https://www.linkedin.com/in/prathamesh-sahasrabhojane/"
+                target="_blank">
 
-            <a href="#" id="restart-btn">
-                Restart
+                <i class="ui linkedin icon"></i>
+
+            </a>
+
+            <a href="mailto:ssahasrabhojane@gmail.com"
+                target="_blank">
+
+                <i class="ui red envelope icon"></i>
+
             </a>
 
         </div>
 
-        <!-- KEEP EXISTING BUTTON -->
+        <br>
 
-        <button id="download-submissions"
-            class="ui secondary button disable"
-            disabled>
-
-            Please wait...
-
-        </button>
-
-    </div>
-
-    <!-- KEEP EXISTING SOCIAL LINKS -->
-
-    <div id="socials"
-        class="sixteen wide column center aligned">
-
-        <a href="https://github.com/TheShubham99/leetcode-to-pdf"
+        <a href="https://forms.gle/ANTV81d47kyVLtcv7"
             target="_blank">
 
-            <i class="ui black github icon"></i>
+            <i class="ui red bug icon"></i>
 
-        </a>
-
-        <a href="https://www.linkedin.com/in/prathamesh-sahasrabhojane/"
-            target="_blank">
-
-            <i class="ui linkedin icon"></i>
-
-        </a>
-
-        <a href="mailto:ssahasrabhojane@gmail.com"
-            target="_blank">
-
-            <i class="ui red envelope icon"></i>
+            Report a Bug / Suggestion
 
         </a>
 
     </div>
 
-    <br>
-
-    <a href="https://forms.gle/ANTV81d47kyVLtcv7"
-        target="_blank">
-
-        <i class="ui red bug icon"></i>
-
-        Report a Bug / Suggestion
-
-    </a>
-
-</div>
-
-<script src="popup.js"></script>
+    <script type="text/javascript" src="popup.js"></script>
 
 </body>
+
+</html>
