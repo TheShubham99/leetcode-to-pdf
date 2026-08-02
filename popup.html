@@ -5,15 +5,16 @@
     <meta charset="UTF-8">
     <title>LeetBook</title>
 
-
     <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
     <script src="vendors/jquery-3.3.1.min.js"></script>
     <script async defer src="vendors/buttons.js"></script>
+
     <!-- Google Analytics -->
     <script src="vendors/gtag.js"></script>
     <script src="ga-init.js"></script>
 
 </head>
+
 <style>
     .disable {
         background-color: #A0A0A0;
@@ -21,40 +22,111 @@
 </style>
 
 <body>
-    <div class="ui grid container" style="border: 1px solid black; border-radius: 4px; padding: 10px; margin: 4px;">
+
+    <div class="ui grid container"
+        style="border: 1px solid black; border-radius: 4px; padding: 10px; margin: 4px;">
+
         <div class="sixteen wide center aligned column">
-            <h1 id="title">Leet<span style="color: purple;">Book</span></h1>
 
-            <div><span><b>1.</b> Make sure you are logged in on LeetCode.com</span></div>
-            <div><span id="caption"><b>2.</b> Click on the following button to view and download your accepted
-                    submissions.</span></div>
-            <br />
-            <div><span id="caption"><b>Do not close the tab.</b></span></div>
-            <div><span id="caption"><b>Downloading may take upto 10 minutes.</b></span></div>
-            <div id="process-status" style="padding:10px; color:black; font-weight:bold;"></div>
-            <div id="stuck-warning" style="display:none; padding:10px; color:red; font-size: 12px; margin-top: -10px;">
-                Is the process stuck? <a href="#" id="restart-btn" style="text-decoration: underline;">Click here to restart</a>
+            <h1 id="title">
+                Leet<span style="color: purple;">Book</span>
+            </h1>
+
+            <div>
+                <span><b>1.</b> Make sure you are logged in on LeetCode.com</span>
             </div>
-            <button id="download-submissions" class="ui secondary button disable" disabled>
-                Please wait...
-            </button>
-        </div>
-        <br />
-        <div id="socials" class="sixteen wide column center aligned">
-            <a href="https://github.com/TheShubham99/leetcode-to-pdf" target="_blank"><i
-                    class="ui black github icon"></i></a>
-            <a href="https://www.linkedin.com/in/prathamesh-sahasrabhojane/" target="_blank"><i
-                    class="ui linkedin icon"></i></a>
-            <a href="mailto:ssahasrabhojane@gmail.com" target="_blank"><i class="ui red envelope icon"></i></a>
-        </div>
-        <br />
-        <a href="https://forms.gle/ANTV81d47kyVLtcv7" target="_blank"><i class="ui red bug icon"></i> Report a Bug /
-            Suggestion</a>
-    </div>
-<!-- Rating Modal Overlay -->
 
+            <div>
+                <span id="caption">
+                    <b>2.</b> Click on the following button to view and download your accepted submissions.
+                </span>
+            </div>
+
+            <br>
+
+            <div>
+                <span id="caption">
+                    <b>Do not close the tab.</b>
+                </span>
+            </div>
+
+            <div>
+                <span id="caption">
+                    <b>Downloading may take upto 10 minutes.</b>
+                </span>
+            </div>
+
+            <div id="process-status"
+                style="padding:10px; color:black; font-weight:bold;">
+            </div>
+
+            <div id="stuck-warning"
+                style="display:none; padding:10px; color:red; font-size:12px; margin-top:-10px;">
+
+                Is the process stuck?
+
+                <a href="#" id="restart-btn"
+                    style="text-decoration: underline;">
+
+                    Click here to restart
+
+                </a>
+
+            </div>
+
+            <button id="download-submissions"
+                class="ui secondary button disable"
+                disabled>
+
+                Please wait...
+
+            </button>
+
+        </div>
+
+        <br>
+
+        <div id="socials"
+            class="sixteen wide column center aligned">
+
+            <a href="https://github.com/TheShubham99/leetcode-to-pdf"
+                target="_blank">
+
+                <i class="ui black github icon"></i>
+
+            </a>
+
+            <a href="https://www.linkedin.com/in/prathamesh-sahasrabhojane/"
+                target="_blank">
+
+                <i class="ui linkedin icon"></i>
+
+            </a>
+
+            <a href="mailto:ssahasrabhojane@gmail.com"
+                target="_blank">
+
+                <i class="ui red envelope icon"></i>
+
+            </a>
+
+        </div>
+
+        <br>
+
+        <a href="https://forms.gle/ANTV81d47kyVLtcv7"
+            target="_blank">
+
+            <i class="ui red bug icon"></i>
+
+            Report a Bug / Suggestion
+
+        </a>
+
+    </div>
 
     <script type="text/javascript" src="popup.js"></script>
+
 </body>
 
 </html>
